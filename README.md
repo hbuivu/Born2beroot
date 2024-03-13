@@ -93,58 +93,48 @@ Debian has more packages and uses apt-get not yum
 * reject password if it contains username  
   reject_username  
   usercheck=1  
-at least 7 changes required in the new password from old password 
-difok=7
-implement the same policy on root
-enforce_for_root
+* at least 7 changes required in the new password from old password
+  difok=7
+* implement the same policy on root  
+  enforce_for_root
+  
+**Why have a more secure password policy?**  
+Statistically, the more characters required/types of characters required, the more combinations of characters there are. With less character count/character type requirements, it's easier for a hacker to find your password bc they would need to go through less combinations of characters.  
+A disadvantage would be that a more complicated password may be easier to forget. And there is human bias when picking out passwords, so while it’s good to add some complexity, commonly used patterns/phrases/letters/numbers will reduce the usefulness of that complexity.  
 
+**To manually change password for previous users before implementation of password policy**
+sudo chage -m <username> (min day before password change)  
+sudo chage -M <username> (max day before password change)  
 
-Why have a more secure password policy?
-Statistically, the more characters required/types of characters required, the more combinations of characters there are. With less character count/character type requirements, it's easier for a hacker to find your password bc they would need to go through less combinations of characters. 
-A disadvantage would be that a more complicated password may be easier to forget. 
-And there is human bias when picking out passwords, so while it’s good to add some complexity, commonly used patterns/phrases/letters/numbers will reduce the usefulness of that complexity. 
+**Change passwords**  
+passwd  
+sudo passwd (for root)  
 
+**View password policies**  
+sudo chage -l <username>  
 
-To manually change password for previous users before implementation of password policy
-sudo chage -m <username> (min day before password change)
-sudo chage -M <username> (max day before password change)
-
-
-Change passwords
-passwd
-sudo passwd (for root)
-
-
-View password policies
-sudo chage -l <username>
-
-
-HOSTNAME
-Check hostname 
+### HOSTNAME
+**Check hostname**  
 sudo hostnamectl status
 
+**Modify hostname**  
+sudo hostnamectl set-hostname <new_hostname>  
+sudo vim etc/hosts  
+change 127.0.0.1 old_hostname → 127.0.0.1 new_hostname  
+sudo reboot  
 
-Modify hostname
-sudo hostnamectl set-hostname <new_hostname>
-sudo vim etc/hosts
-change 127.0.0.1 old_hostname → 127.0.0.1 new_hostname
-sudo reboot
+### PARTITIONS
+**View partitions**  
+lsblk  
 
-
-PARTITIONS
-View partitions 
-lsblk
-
-
-Why partition hard drive?
-allow multiple operating systems to run on same device
-can store different types of files on different partitions
+**Why partition hard drive?**  
+allow multiple operating systems to run on same device  
+can store different types of files on different partitions  
 ex: separate user data from system data to prevent system partition from becoming too full that it becomes unusable. 
 makes backing up data easier
 one disadvantage is that it can lead to inefficient use of the whole disk
 
-
-Logical vs primary partition
+**Logical vs primary partition**
 Only 4 primary partitions can exist on a single disk.
 A logical partition can be split up any number of times. 
 
