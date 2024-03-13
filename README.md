@@ -452,7 +452,7 @@ localhost is the standard hostname given to the machine itself. Usually it is 12
    exit  
 6. Login  
    mariadb -u <username> -p  
-7. Confirm databases
+7. Confirm databases  
    SHOW DATABASES;  
 
 
@@ -467,11 +467,11 @@ localhost is the standard hostname given to the machine itself. Usually it is 12
 
 ## SAVING THE VM
 * GET SIGNATURE
-* SAVE A SNAPSHOT OF YOUR VM
-  pwd
-  cd goinfre
-  cd born2beroot (or whatever you named your folder)
-  shasum born2beroot.vdi
+* SAVE A SNAPSHOT OF YOUR VM  
+  pwd  
+  cd goinfre  
+  cd born2beroot (or whatever you named your folder)  
+  shasum born2beroot.vdi  
 
 
 
