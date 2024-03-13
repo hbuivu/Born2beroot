@@ -139,125 +139,124 @@ Only 4 primary partitions can exist on a single disk.
 A logical partition can be split up any number of times. 
 
 
-What is LVM and pros of logical partitioning?
-LVM stands for logical volume manager, used for mapping and managing hard disk memory on Linux systems. 
-offers system admins more flexible approach to managing disk storage than traditional partitioning
-facilitate managing the sometimes conflicting storage needs of multiple end users - with this approach, the admin doesn't need to allocate all disk storage space at initial setup. some of it can be reserved for later. 
-makes it easier to to resize and move storage as needed
-MAIN IDEA: LVM looks at all storage on hard disks as one unit of memory. In addition to dividing memory, it can also COMBINE memory from different hard disks and allocate as needed. 
+**What is LVM and pros of logical partitioning?**
+* LVM stands for logical volume manager, used for mapping and managing hard disk memory on Linux systems.  
+* offers system admins more flexible approach to managing disk storage than traditional partitioning  
+* facilitate managing the sometimes conflicting storage needs of multiple end users - with this approach, the admin doesn't need to allocate all disk storage space at initial setup. some of it can be reserved for later.  
+* makes it easier to to resize and move storage as needed
+* **MAIN IDEA: LVM looks at all storage on hard disks as one unit of memory. In addition to dividing memory, it can also COMBINE memory from different hard disks and allocate as needed.**
 
 
-Why encrypt your hard drive?
-Data on an encrypted hard drive cannot be read by anyone who doesn’t have the key or password. This is a way to protect your data and information.
+**Why encrypt your hard drive?**  
+Data on an encrypted hard drive cannot be read by anyone who doesn’t have the key or password. This is a way to protect your data and information.  
 
 
-Extra vocab
-Buffer - small amt of unusable space on each disk
-/boot  - stores data that is used before kernel begins executing user-made programs
-aka it stores everything required for boot process except for configuration files not needed at boot time
-/swap - a swap space serves as a temporary overflow space for ram
-/home - director for a particular user in the system
-/ - (root) - uppermost directory that contains all other directories in linux system
-/tmp - contains necessary files that are temporarily required by the system as well as other software and applications running on the machine
-/var - a standard subdirectory of the root directory in Linux and other Unix-like operating systems that contains files to which the system writes data during the course of its operation.
-/var/log - contains linux log files
-ext4 journaling filesystem - designed to ensure that filesystem structures appear consistent on disk at all times. It is a successor of ext3 and ext2. 
+**Extra vocab**
+* Buffer - small amt of unusable space on each disk
+* /boot  - stores data that is used before kernel begins executing user-made programs...aka it stores everything required for boot process except for configuration files not needed at boot time
+* /swap - a swap space serves as a temporary overflow space for ram
+* /home - director for a particular user in the system
+* / - (root) - uppermost directory that contains all other directories in linux system
+* /tmp - contains necessary files that are temporarily required by the system as well as other software and applications running on the machine
+* /var - a standard subdirectory of the root directory in Linux and other Unix-like operating systems that contains files to which the system writes data during the course of its operation.
+* /var/log - contains linux log files
+* ext4 journaling filesystem - designed to ensure that filesystem structures appear consistent on disk at all times. It is a successor of ext3 and ext2. 
 journaling file system - keeps track of changes not yet committed to the file system’s main part by recording the goal of such changes in a data structure known as a journal (usually a circular log). In case of a crash/power failure, file systems can be brought back online with lower likelihood of being corrupt
-VDI - virtualbox disk image, the container format for guest hard disks used by VirtualBox.
-ISO - a cd-rom image saved in ISO format. It can be used as a source file to create CD’s.
+* VDI - virtualbox disk image, the container format for guest hard disks used by VirtualBox.
+* ISO - a cd-rom image saved in ISO format. It can be used as a source file to create CD’s.
 
 
-SUDO
-Check sudo installation
-sudo
-dpkg -l | grep sudo
+### SUDO
+**Check sudo installation**  
+sudo  
+dpkg -l | grep sudo  
 
 
-Assign new user to sudo
-adduser <username> sudo
+**Assign new user to sudo**
+adduser <username> sudo  
 
 
-Verify user groups
-groups <username>
+**Verify user groups**  
+groups <username>    
 
 
-What is sudo and why use it?
-Sudo gives chosen users temporary root privileges. (You can validate and refresh the sudo time limit using sudo -v). You can limit admin privileges for users who don’t need it.
-By giving some users admin privileges, you don’t need to give out the root password to everyone. 
-Root is easier to attack. Hackers don’t need to guess the login name (it’s root) and it always has admin privileges. By disabling root, an attacker will have a harder time guessing login and password of an admin user instead. 
-All commands and arguments will be logged as part of the security and compliance protocol. You can audit user behavior in case you need to figure out something that happened on the system. 
+**What is sudo and why use it?**  
+* Sudo gives chosen users temporary root privileges. (You can validate and refresh the sudo time limit using sudo -v). You can limit admin privileges for users who don’t need it.
+* By giving some users admin privileges, you don’t need to give out the root password to everyone. 
+* Root is easier to attack. Hackers don’t need to guess the login name (it’s root) and it always has admin privileges. By disabling root, an attacker will have a harder time guessing login and password of an admin user instead. 
+* All commands and arguments will be logged as part of the security and compliance protocol. You can audit user behavior in case you need to figure out something that happened on the system. 
 alternatively, su has a shell history feature, but its default age is 1000 lines, so there’s no scale.
 
 
-Sudo policy file
-sudo vim /etc/sudoers.d/sudo_config
-Changes made to files in /etc/sudoers.d remain in place if you upgrade the system. This can prevent user lockouts when the system is upgraded. 
-Sudoers file is controlled by distribution’s package manager. You will have to go in to manually approve changes to the file to merge it into a new file when upgrades take place.
+**Sudo policy file**  
+sudo vim /etc/sudoers.d/sudo_config  
+Changes made to files in /etc/sudoers.d remain in place if you upgrade the system. This can prevent user lockouts when the system is upgraded.   
+Sudoers file is controlled by distribution’s package manager. You will have to go in to manually approve changes to the file to merge it into a new file when upgrades take place.  
 
 
-Configuring sudo
-Format:
-Defaults	Rule
-passwd_tries=3 → you can try password 3x
-badpass_message = “oop wrong password” → customizable message
-logfile=”/var/log/sudo/sudo.log” → log all sudo commands to this log file
-log_input, log_output → archive all sudo inputs and outputs to iolog_dir
-iolog_dir=”/var/log/sudo”
-requiretty (see below)
-secure_path=”...” (see below)
-TTY
-teletypewriter - command used to provide the file name of the terminal connected to the standard input
-sudo must be run from a logged in terminal session (tty). This prevents sudo from being used from daemons or other detached processes like cronjobs or webserver plugins or directly from an ssh call without setting up a terminal session. 
-secure_path
-Path used for every command run from sudo. If you don't trust the people running sudo to have a same PATH environment variable you may want to use this. Another use is if you want to have the ''root path'' be separate from the ''user path''. Users in the group specified by the exempt_group option are not affected by secure_path. This option is not set by default.
+**Configuring sudo**
+_Format:_  
+* Defaults	Rule
+* passwd_tries=3 → you can try password 3x
+* badpass_message = “oop wrong password” → customizable message
+* logfile=”/var/log/sudo/sudo.log” → log all sudo commands to this log file
+* log_input, log_output → archive all sudo inputs and outputs to iolog_dir
+* iolog_dir=”/var/log/sudo”
+* requiretty (see below)
+* secure_path=”...” (see below)
+_TTY_  
+* teletypewriter - command used to provide the file name of the terminal connected to the standard input
+* sudo must be run from a logged in terminal session (tty). This prevents sudo from being used from daemons or other detached processes like cronjobs or webserver plugins or directly from an ssh call without setting up a terminal session. 
+_secure_path_  
+* Path used for every command run from sudo. If you don't trust the people running sudo to have a same PATH environment variable you may want to use this. Another use is if you want to have the ''root path'' be separate from the ''user path''. Users in the group specified by the exempt_group option are not affected by secure_path. This option is not set by default.
 
 
-UFW
+### UFW
 Uncomplicated firewall - program to manage netfilter firewall
 
 
-Check installation
+**Check installation**  
 dpkg -l | grep ufw
 
 
-Check status and rules
+**Check status and rules**  
 sudo ufw status
 
 
-Add a new open port
+**Add a new open port**  
 sudo ufw allow <port_number>
 
 
-Delete rules
-sudo ufw status numbered
-sudo ufw delete <rule_number>
-or 
-sudo ufw delete allow <port_number> ← this is faster, will also delete v6 version
+**Delete rules**  
+sudo ufw status numbered  
+sudo ufw delete <rule_number>  
+or   
+sudo ufw delete allow <port_number> ← this is faster, will also delete v6 version  
 
 
-What’s a firewall and why use it?
-network security system to monitor and control incoming and outgoing network traffic based on predetermined security rules
-2 types: network based and host based
-the default when setting up is that it will deny all incoming traffic and allow all outgoing traffic
-A firewall filters out potentially dangerous or superfluous network traffic. You can specify which port to open where information may come through.
+**What’s a firewall and why use it?**  
+* network security system to monitor and control incoming and outgoing network traffic based on predetermined security rules
+* 2 types: network based and host based
+* the default when setting up is that it will deny all incoming traffic and allow all outgoing traffic
+* A firewall filters out potentially dangerous or superfluous network traffic. You can specify which port to open where information may come through.
 
 
-SSH
-Check installation and status
-dpkg -l | grep ssh
+**SSH**  
+Check installation and status  
+dpkg -l | grep ssh  
+sudo systemctl status ssh  
+
+
+**Verify SSH service rules**  
 sudo systemctl status ssh
 
 
-Verify SSH service rules
-sudo systemctl status ssh
-
-
-Use SSH to log in
-ssh <user>@127.0.0.1 -p 4242
+**Use SSH to log in**   
+ssh <user>@127.0.0.1 -p 4242  
 ssh root@127.0.0.1 -p 4242
 
 
-Check config file
+**Check config file**  
 /etc/ssh/sshd_config
 
 
