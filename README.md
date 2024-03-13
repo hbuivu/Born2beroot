@@ -374,13 +374,12 @@ sudo systemctl status cron
 
 
 **Format of a cron job**   
-minute   hour   date    month   day   <file> |< commands>  
-* any value  
-, value list separator  
-- range of values  
-/ step values  
-ex:  
-*/<number> → run for every <number> min, hours, etc  
+* minute   hour   date    month   day   <file> |< commands>  
+* '*' any value  
+* , value list separator  
+* '-' range of values  
+* / step values  
+* ex:  */<number> → run for every <number> min, hours, etc  
 
 
 **Run a cron job every 10 minutes**  
@@ -395,85 +394,84 @@ sudo systemctl enable cron
 
 
 ### COMMANDS GLOSSARY
-dpkg -Debian package manager used to install, build, remove, and manage Debian packages
-dpkg -l | grep <package_name>
-check list of installed packages for the package_name
-getent - get entry
-getent group <groupname>
-check which users have been added to specified group; verify user has been added to group
-getent passwd <username>
-check data on specified user; verify that user has been created
-grep - use to search files for a some given “pattern”, like a word
-groups - check groups
-sudo reboot -reboot system
-sudo -v - validate and refresh time limit on sudo
+* dpkg -Debian package manager used to install, build, remove, and manage Debian packages  
+* dpkg -l | grep <package_name> - check list of installed packages for the package_name
+* getent - get entry  
+* getent group <groupname> - check which users have been added to specified group; verify user has been added to group  
+* getent passwd <username> - check data on specified user; verify that user has been created  
+* grep - use to search files for a some given “pattern”, like a word
+* groups - check groups
+* sudo reboot -reboot system
+* sudo -v - validate and refresh time limit on sudo
 
 
-BONUS
+## BONUS
 
-
+### Wordpress
 Wordpress is a free and open source content management system that allows you to create a blog and website from a web-based interface.
 
 
-To open wordpress site, go to browser
-localhost
-localhost: 80
+**To open wordpress site, go to browser**  
+localhost  
+localhost: 80  
 by default port 80 is used by http connection
 
 
-To edit the wordpress site
- http://localhost/wp-login.php
+**To edit the wordpress site**  
+ http://localhost/wp-login.php  
 
 
-What is localhost
-localhost is the standard hostname given to the machine itself. Usually it is 127.0.0.1
+**What is localhost**  
+localhost is the standard hostname given to the machine itself. Usually it is 127.0.0.1  
 
 
-lighttpd is an open-source secure, fast, compliant, and very flexible web server that has been optimized for high-performance environments
-by default it listens on port 80
-provides web-based interface to control and manage the application
-increases the speed and performance of wordpress
-install package, open port 80 on ufw, add new port forwarding rule
+### lighttpd
+* lighttpd is an open-source secure, fast, compliant, and very flexible web server that has been optimized for high-performance environments  
+* by default it listens on port 80  
+* provides web-based interface to control and manage the application  
+* increases the speed and performance of wordpress  
+* install package, open port 80 on ufw, add new port forwarding rule  
 
 
-MariaDB Server is one of the most popular open source relational databases. It is an alternative to MySQL
-relational databases - a database structured to recognize relations between stored items of information
-used for data warehousing, ecommerce, enterprise-level features, and logging applications
-When a visitor goes to your site, the WordPress core queries the database. The database then returns the requested data. WordPress core combines the retrieved data and executes its PHP code to dynamically generate an HTML page. That page is served to your visitor's browser.
+### MariaDB Server 
+* MariaDB is one of the most popular open source relational databases. It is an alternative to MySQL
+* relational databases - a database structured to recognize relations between stored items of information
+* used for data warehousing, ecommerce, enterprise-level features, and logging applications
+* When a visitor goes to your site, the WordPress core queries the database. The database then returns the requested data. WordPress core combines the retrieved data and executes its PHP code to dynamically generate an HTML page. That page is served to your visitor's browser.
 
 
-Enter MariaDB
-sudo mariadb
-Create database
-CREATE DATABASE <database_name>;
-Create new database user and grant full privileges
-GRANT ALL ON <database_name>.* to ‘<username>’@’localhost’ IDENTIFIED BY ‘<password>’ WITH GRANT OPTION;
-Flush privileges
-FLUSH PRIVILEGES;
-clears/reloads various internal caches used by MariaDB
-Exit
-exit
+1. Enter MariaDB   
+   sudo mariadb  
+2. Create database  
+   CREATE DATABASE <database_name>;   
+3. Create new database user and grant full privileges  
+   GRANT ALL ON <database_name>.* to ‘<username>’@’localhost’ IDENTIFIED BY ‘<password>’ WITH GRANT OPTION;  
+4. Flush privileges  
+   FLUSH PRIVILEGES; -> clears/reloads various internal caches used by MariaDB  
+5. Exit  
+   exit  
+6. Login  
+   mariadb -u <username> -p  
+7. Confirm databases
+   SHOW DATABASES;  
 
 
-Login 
-mariadb -u <username> -p
-Confirm databases
-SHOW DATABASES;
+### PHP 
+* (PHP: Hypertext Preprocessor) is a widely-used open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML.
+* A scripting language is a series of commands that can be executed without the need for compiling
+* ex: PHP, Python, Perl
+* Used to create dynamic interactive websites
+* Wordpress is written using PHP as the scripting language
+* PHP is a server side language, which means that it runs on your web hosting server. 
+* Whenever someone visits your website, their browser contacts your server to request the page. The PHP code runs on the server, and generates an HTML page to send to the visitor. The visitor then sees the HTML page in their browser. They can’t see the PHP script because it’s only on the hosting server.
 
-
-PHP (PHP: Hypertext Preprocessor) is a widely-used open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML.
-A scripting language is a series of commands that can be executed without the need for compiling
-ex: PHP, Python, Perl
-Used to create dynamic interactive websites
-Wordpress is written using PHP as the scripting language
-PHP is a server side language, which means that it runs on your web hosting server. 
-Whenever someone visits your website, their browser contacts your server to request the page. The PHP code runs on the server, and generates an HTML page to send to the visitor. The visitor then sees the HTML page in their browser. They can’t see the PHP script because it’s only on the hosting server.
-GET SIGNATURE
-SAVE A SNAPSHOT OF YOUR VM
-pwd
-cd goinfre
-cd born2beroot (or whatever you named your folder)
-shasum born2beroot.vdi
+## SAVING THE VM
+* GET SIGNATURE
+* SAVE A SNAPSHOT OF YOUR VM
+  pwd
+  cd goinfre
+  cd born2beroot (or whatever you named your folder)
+  shasum born2beroot.vdi
 
 
 
