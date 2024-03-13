@@ -194,8 +194,8 @@ Changes made to files in /etc/sudoers.d remain in place if you upgrade the syste
 Sudoers file is controlled by distribution’s package manager. You will have to go in to manually approve changes to the file to merge it into a new file when upgrades take place.  
 
 
-**Configuring sudo**
-_Format:_  
+**Configuring sudo**  
+_Format:_   
 * Defaults	Rule
 * passwd_tries=3 → you can try password 3x
 * badpass_message = “oop wrong password” → customizable message
@@ -203,11 +203,11 @@ _Format:_
 * log_input, log_output → archive all sudo inputs and outputs to iolog_dir
 * iolog_dir=”/var/log/sudo”
 * requiretty (see below)
-* secure_path=”...” (see below)
+* secure_path=”...” (see below)  
 _TTY_  
 * teletypewriter - command used to provide the file name of the terminal connected to the standard input
-* sudo must be run from a logged in terminal session (tty). This prevents sudo from being used from daemons or other detached processes like cronjobs or webserver plugins or directly from an ssh call without setting up a terminal session. 
-_secure_path_  
+* sudo must be run from a logged in terminal session (tty). This prevents sudo from being used from daemons or other detached processes like cronjobs or webserver plugins or directly from an ssh call without setting up a terminal session.   
+_secure_path_   
 * Path used for every command run from sudo. If you don't trust the people running sudo to have a same PATH environment variable you may want to use this. Another use is if you want to have the ''root path'' be separate from the ''user path''. Users in the group specified by the exempt_group option are not affected by secure_path. This option is not set by default.
 
 
@@ -241,7 +241,7 @@ sudo ufw delete allow <port_number> ← this is faster, will also delete v6 vers
 * A firewall filters out potentially dangerous or superfluous network traffic. You can specify which port to open where information may come through.
 
 
-**SSH**  
+### SSH  
 Check installation and status  
 dpkg -l | grep ssh  
 sudo systemctl status ssh  
@@ -260,142 +260,141 @@ ssh root@127.0.0.1 -p 4242
 /etc/ssh/sshd_config
 
 
-What is SSH and why use it?
-Secure Shell/Secure Socket Shell
-network protocol that gives system admins a secure way to access a computer of an unsecured network
-attempts to safely communicate encrypted data over two computers using an open network
-provides users with strong password authentication and public key authentication
+**What is SSH and why use it?**  
+* Secure Shell/Secure Socket Shell
+* network protocol that gives system admins a secure way to access a computer of an unsecured network
+* attempts to safely communicate encrypted data over two computers using an open network
+* provides users with strong password authentication and public key authentication
 
 
-BASH SCRIPT
-Directory
+### BASH SCRIPT
+**Directory**  
 /usr/local/bin/monitoring.sh
 
 
-Make file executable
-sudo chmod 755 /usr/local/bin/monitoring.sh
-sudo chmod +x <filename>
+**Make file executable**  
+sudo chmod 755 /usr/local/bin/monitoring.sh  
+sudo chmod +x <filename>  
 
 
-#!bin/bash
+**#!bin/bash**  
 /bin/bash is the most common shell used as default shell for user login of the linux system.
 
 
-ARCH=$(uname -a)
-prints basic info about the operating system name and system hardware. 
--a prints kernel name, network node hostname, kernel release date, kernel version, machine hardware name, hardware platform, operating system
+**ARCH=$(uname -a)**  
+prints basic info about the operating system name and system hardware.   
+-a prints kernel name, network node hostname, kernel release date, kernel version, machine hardware name, hardware platform, operating system  
 
 
-PCPU=$(lscpu | grep "Socket(s)" | awk '{print $NF}')
-Physical processors - number of hardware cpus in the system
-
-lscpu gets CPU information about the system
-Socket(s) tells you how many physical CPUs there are. (CPU will give you number of logical CPUs)
-awk allows users to process and manipulate data and produce formatted reports; NF → last line
-
-
-VCPU=$(grep "^processor" /proc/cpuinfo | wc -l)
-a virtual processor is the portion of the physical cpu that is assigned to the virtual machine
-/proc/cpuinfo displays what type of processor your system is running including the number of CPUs present
-^ → finds all lines that start with processor
-wc -l → counts words and prints only number of lines present in the file
+**PCPU=$(lscpu | grep "Socket(s)" | awk '{print $NF}')**  
+Physical processors - number of hardware cpus in the system  
+lscpu gets CPU information about the system  
+Socket(s) tells you how many physical CPUs there are. (CPU will give you number of logical CPUs)  
+awk allows users to process and manipulate data and produce formatted reports; NF → last line  
 
 
-MEM=$(free -m | grep "Mem" | awk '{printf("%s/%sMB (%.2f%%)", $4, $2, 100*$3/$2>
-RAM → random access memory. It is hardware that allows computer to perform more than one task at a time efficiently
-RAM is where OS, application programs, and data in current use are kept so they can be reached quickly by the processor
-volatile → data is retained only when the computer is on. It is lost when computer is off
+**VCPU=$(grep "^processor" /proc/cpuinfo | wc -l)**  
+a virtual processor is the portion of the physical cpu that is assigned to the virtual machine  
+/proc/cpuinfo displays what type of processor your system is running including the number of CPUs present  
+^ → finds all lines that start with processor  
+wc -l → counts words and prints only number of lines present in the file  
+
+
+**MEM=$(free -m | grep "Mem" | awk '{printf("%s/%sMB (%.2f%%)", $4, $2, 100*$3/$2>**  
+RAM → random access memory. It is hardware that allows computer to perform more than one task at a time efficiently  
+RAM is where OS, application programs, and data in current use are kept so they can be reached quickly by the processor  
+volatile → data is retained only when the computer is on. It is lost when computer is off  
 free → shows total, used, free memory and buffer/cache
 
 
-DISK=$(df -m --total | grep "total" | awk '{printf("%i/%.0fGB (%s)", $4, $2/100>
-disk space refers to the hard drive storage
-Hard drive storage is typically used for long-term storage of various types of files.
-df → stands for disk free, displays the amount of disk space available on the filesystem with each file name's argument.
--m → show info in megabytes
+**DISK=$(df -m --total | grep "total" | awk '{printf("%i/%.0fGB (%s)", $4, $2/100>**
+disk space refers to the hard drive storage  
+Hard drive storage is typically used for long-term storage of various types of files.  
+df → stands for disk free, displays the amount of disk space available on the filesystem with each file name's argument.  
+-m → show info in megabytes  
 --total → get grand total of all available storage	
 	
-CPU=$(mpstat | grep "all" | awk '{printf("%.1f", 100-$NF)}')
-processor utilization is the % of time a processor is occupied compared to the total time the processor is available for use
-mpstat shows activities for each available processor 
+**CPU=$(mpstat | grep "all" | awk '{printf("%.1f", 100-$NF)}')**  
+processor utilization is the % of time a processor is occupied compared to the total time the processor is available for use  
+mpstat shows activities for each available processor   
 
 
-BOOT=$(who -b | awk '{printf($3 " " $4)}')
+**BOOT=$(who -b | awk '{printf($3 " " $4)}')**  
 the who command is used to get info about currently logged in user on system
 
 
-LVM=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo "no"; else echo "ye>
-lsblk lists info about all available or specified block devices
+**LVM=$(if [ $(lsblk | grep "lvm" | wc -l) -eq 0 ]; then echo "no"; else echo "ye>**
+lsblk lists info about all available or specified block devices  
 If there is no lvm listed, then LVM is not active
 
 
-TCP=$(ss | grep tcp | wc -l)
-transmission control protocol
-communication standard that enable application programs and computing devices to exchange messages/info over a network
-ss → socket statistics tool used to show network statistics
+**TCP=$(ss | grep tcp | wc -l)**  
+transmission control protocol  
+communication standard that enable application programs and computing devices to exchange messages/info over a network  
+ss → socket statistics tool used to show network statistics  
 
 
-USERLOG=$(who | cut -d " " -f 1 | sort -u | wc -l)
-cut will strip all info except username by displaying only the first field of indo delimited by a space
-sort name by alphabetical order
--u option removes duplicates
+**USERLOG=$(who | cut -d " " -f 1 | sort -u | wc -l)**  
+cut will strip all info except username by displaying only the first field of indo delimited by a space   
+sort name by alphabetical order  
+-u option removes duplicates  
 
 
-NETWORK=$(hostname -I)
-an IP address is a unique string of characters that identifies each computer using the Internet Protocol to communicate over a network
-IPv4 uses 4 1 byte decimal numbers separated by a dot (32 bit) vs IPv6 , which is a hexadecimal separated by a colon
-hostname command is used to view or change a system's domain and hostname.It can also be used to check IP address
+**NETWORK=$(hostname -I)**  
+an IP address is a unique string of characters that identifies each computer using the Internet Protocol to communicate over a network  
+IPv4 uses 4 1 byte decimal numbers separated by a dot (32 bit) vs IPv6 , which is a hexadecimal separated by a colon  
+hostname command is used to view or change a system's domain and hostname.It can also be used to check IP address  
 
 
-MAC=$(ip link show | awk '$1=="link/ether"{print $2}')
-media access control address
-unique identifier assigned to a network interface controller for use as a network address in communications within a network segment
-ip link → used to display and modify network interfaces
+**MAC=$(ip link show | awk '$1=="link/ether"{print $2}')**
+media access control address  
+unique identifier assigned to a network interface controller for use as a network address in communications within a network segment  
+ip link → used to display and modify network interfaces  
 
 
-SUDO=$(journalctl _COMM=sudo -q | grep "COMMAND" | wc -l)
-journalctl is used to query the systemd journal
-If a file path refers to an executable script, a "_COMM=" match for the script name is added to the query
--q option suppresses informational messages
+**SUDO=$(journalctl _COMM=sudo -q | grep "COMMAND" | wc -l)**  
+journalctl is used to query the systemd journal  
+If a file path refers to an executable script, a "_COMM=" match for the script name is added to the query  
+-q option suppresses informational messages  
 
 
-CRON
-What is cron?
+### CRON
+**What is cron?**  
 Cron is a job scheduler on linux. It runs in the background and schedules jobs like commands or shell scripts to run periodically at fixed times, dates, or intervals.
 
 
-Check scheduled cron jobs/edit cron table/configure cron as root
-sudo crontab -u root -e
+**Check scheduled cron jobs/edit cron table/configure cron as root**  
+sudo crontab -u root -e  
 cron utility runs based on commands specified in a cron table (crontab)
 
 
-Start cron job/check status
-sudo systemctl start cron
+**Start cron job/check status**  
+sudo systemctl start cron  
 sudo systemctl status cron
 
 
-Format of a cron job
-minute   hour   date    month   day   <file> |< commands>
-* any value
-, value list separator
-- range of values
-/ step values
-ex: 
-*/<number> → run for every <number> min, hours, etc
+**Format of a cron job**   
+minute   hour   date    month   day   <file> |< commands>  
+* any value  
+, value list separator  
+- range of values  
+/ step values  
+ex:  
+*/<number> → run for every <number> min, hours, etc  
 
 
-Run a cron job every 10 minutes
-*/10 * * * * sh /usr/local/bin/monitoring.sh | wall
-wall → displays message to all logged in users
+**Run a cron job every 10 minutes**  
+*/10 * * * * sh /usr/local/bin/monitoring.sh | wall  
+wall → displays message to all logged in users  
 
 
-Stop cron job
-sudo systemctl disable cron
-Start cron job
+**Stop cron job**
+sudo systemctl disable cron  
+Start cron job  
 sudo systemctl enable cron
 
 
-COMMANDS GLOSSARY
+### COMMANDS GLOSSARY
 dpkg -Debian package manager used to install, build, remove, and manage Debian packages
 dpkg -l | grep <package_name>
 check list of installed packages for the package_name
